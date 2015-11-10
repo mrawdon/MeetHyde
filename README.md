@@ -14,16 +14,16 @@ No installations are needed, just follow these steps and start editing your webs
 	
  Inside your Account go to: [Settings/Personal access tokens](https://github.com/settings/tokens)
 	  
-![](https://raw.githubusercontent.com/MeetHyde/meethyde.github.io/master/img/indications/goto.jpg)
+![](https://raw.githubusercontent.com/MeetHyde/meethyde.github.io/master/img/docs/goto.jpg)
 
 	  
  Click on Genetare new token, give it a description and select the scopes, you can select all or adjust it to your needs:
  
- ![](https://raw.githubusercontent.com/MeetHyde/meethyde.github.io/master/img/indications/set-options.jpg)
+ ![](https://raw.githubusercontent.com/MeetHyde/meethyde.github.io/master/img/docs/set-options.jpg)
 	  
 Click "Generate token" and copy the access token:
 
- ![](https://raw.githubusercontent.com/MeetHyde/meethyde.github.io/master/img/indications/copy-token.jpg)
+ ![](https://raw.githubusercontent.com/MeetHyde/meethyde.github.io/master/img/docs/copy-token.jpg)
 	  
 
 3.- Finally in your downloaded folder open "js/config.js":
