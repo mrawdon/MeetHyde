@@ -144,9 +144,9 @@ var UserUrl;
 var UserId;
 var PublicRepos;
 var ReposUrl;
-var TotalPages;
 var RepoName;
 var RepoPath;
+var RepoOwner;
 var RepoBranch;
 var RepoUrl;
 var CommitMsg = 'Changes made by ';
@@ -184,9 +184,9 @@ var FilesToDelete = [];
 
 //Show user websites
 	function ShowWebsites() {
-		TotalPages = 0;
 		RepoName = '';
 		RepoPath = '';
+		RepoOwner = '';
 		RepoBranch = '';
 		ElementName = '';
 		ElementPath = '';
@@ -203,8 +203,10 @@ var FilesToDelete = [];
 		$('body').attr('data-content', 'sites').attr('data-images', '0');
 		$('.breadcrumb .fa-home').nextAll().remove();
 		
-		if(PublicRepos !== 0){
+			
 			Repos(function(data) {
+				_totalPages = 0;
+				_totalRepos = data.length;
 				$.each(data, function( index, value ) {
 					if(value.has_pages === true){ //If the repo has gh pages
 		      	if(value.name === UserLogin.toLowerCase() + '.github.io'){ //If the repo name is the UserLogin followed by .github.io it's a user page, else it's a repo page
@@ -216,22 +218,23 @@ var FilesToDelete = [];
 		      		_repoUrl = UserLogin.toLowerCase() + '.github.io' + '/' + value.name;
 		      		_branch = 'gh-pages'
 		      	}
-		      	$('main .content').append('<div class="card"><div class="card-block"><a href="' + _url + '" target="_blank"><i class="fa fa-github-square"></i></a> ' + value.name + '</div><div data-site="' + value.name + '" data-branch="' + _branch + '" data-url="' + _repoUrl + '" class="card-footer">Manage <i class="fa fa-arrow-circle-o-right"></i></div></div>');
-		      	TotalPages += 1;
+		      	$('main .content').append('<div class="card"><div class="card-block"><a href="' + _url + '" target="_blank"><i class="fa fa-github-square"></i></a> ' + value.name + '</div><div data-site="' + value.name + '" data-owner="' + value.owner.login + '" data-branch="' + _branch + '" data-url="' + _repoUrl + '" class="card-footer">Manage <i class="fa fa-arrow-circle-o-right"></i></div></div>');
+		      	_totalPages += 1;
 		      }
 		    });
-				$('aside .my-websites .label').text(TotalPages);
-				if(TotalPages < 1){
+				$('aside .my-websites .label').text(_totalPages);
+				if(_totalRepos < 1){
+					$('main .content').append('<div class="alert alert-danger" role="alert"><strong>Oh oh!</strong> It seems like there are no public repositories in your account. Meet Hyde only tracks pubic repositories because websites are meant to be public right?"</div>');
+				}else if(_totalPages < 1){
 					$('main .content').append('<div class="alert alert-danger" role="alert"><strong>Oh oh!</strong> It seems like there are no websites in any of your repositories. Meet Hyde only tracks repositories with "gh-pages" branches and user pages which are repositories named this way: "user-name.github.io"</div>');
 				}
 				if($('.loading').is(":visible")){
 					$('.loading, .noclick').toggle();
 				}
 			});
-		}else{
-			$('main .content').append('<div class="alert alert-danger" role="alert"><strong>Oh oh!</strong> It seems like there are no public repositories in your account. Meet Hyde only tracks pubic repositories because websites are meant to be public right?"</div>');
-			$('.loading, .noclick').toggle();
-		}
+		
+			
+		
 		//Append option to create a new website (in progress)
 			//$('main .content').append('<div id="fork" class="card" data-toggle="modal" data-target="#Fork"><div class="card-block"><i class="fa fa-plus-circle"></i> New</div><div class="card-footer">Create a new website <i class="fa fa-arrow-circle-o-right"></i></div></div>');
 	}
@@ -245,7 +248,7 @@ var FilesToDelete = [];
 		});
 
 //Show the tree for a website
-	function Root(_repoName, _repoBranch, _repoUrl, _showPages ){
+	function Root(_repoName, _repoOwner, _repoBranch, _repoUrl, _showPages ){
 		FrontMatter = '';
 		HtmlContents = ''
 		MdContents = ''
@@ -255,7 +258,8 @@ var FilesToDelete = [];
 		FilesToDelete = [];
 		ShowPages = _showPages;
 		RepoName = _repoName;
-		RepoPath = '/repos/' + UserLogin + '/' + RepoName + '/';
+		RepoOwner = _repoOwner;
+		RepoPath = '/repos/' + RepoOwner + '/' + RepoName + '/';
 		RepoBranch = _repoBranch;
 		RepoUrl = _repoUrl;
 		$('body').attr('data-images', '0');
@@ -263,9 +267,9 @@ var FilesToDelete = [];
 		$('.loading, .noclick').toggle(); //toggle the loader
 		$('body').attr('data-content', 'dir'); //Change the body data-content attribute
 		$('.title').text(RepoName).attr('data-site', RepoName).attr('data-branch', RepoBranch).attr('data-url', RepoName);
-		if(!_showPages){
-			$('header .url').html('(<a href="http://' + RepoUrl + '" target="_blank">' + RepoUrl + '</a>)'); //Update url on header
-		}
+		//if(!_showPages){
+		//	$('header .url').html('(<a href="http://' + RepoUrl + '" target="_blank">' + RepoUrl + '</a>)'); //Update url on header
+		//}
 		
 
 		//Create DS_Store file to prevent default images folder deletion
@@ -302,20 +306,20 @@ var FilesToDelete = [];
 					});
 				}
 
-				if (value.path === 'CNAME') { //Display domain name in header
-					Read('CNAME', RepoBranch, function(data) {
-						if(data.indexOf('.') != -1){
-							$('header .url').html('(<a href="http://' + data + '" target="_blank">' + data + '</a>)');
-						}
-					});
-				}
+				//if (value.path === 'CNAME') { //Display domain name in header
+				//	Read('CNAME', RepoBranch, function(data) {
+				//		if(data.indexOf('.') != -1){
+				//			$('header .url').html('(<a href="http://' + data + '" target="_blank">' + data + '</a>)');
+				//		}
+				//	});
+				//}
 			});
 
 			//Create the pages links
 				if(!_showPages){
-					$('main .content').append('<div class="card" data-icon="tree" ><div class="card-block"><i class="fa"> </i></div><div class="card-footer" data-site="' + RepoName +'" data-branch="' + RepoBranch + '" data-pages="' + true + '">Pages <i class="fa"></i></div></div>');
+					$('main .content').append('<div class="card" data-icon="tree" ><div class="card-block"><i class="fa"> </i></div><div class="card-footer" data-site="' + RepoName +'" data-owner="' + RepoOwner + '" data-branch="' + RepoBranch + '" data-pages="' + true + '">Pages <i class="fa"></i></div></div>');
 				}
-				$('aside ul').append('<li data-site="' + RepoName +'" data-branch="' + RepoBranch + '" data-url="'+ RepoName + '" data-pages="' + true + '"><i class="fa fa-folder-open-o"></i> Pages</li>');
+				$('aside ul').append('<li data-site="' + RepoName +'" data-owner="' + RepoOwner + '" data-branch="' + RepoBranch + '" data-url="'+ RepoName + '" data-pages="' + true + '"><i class="fa fa-folder-open-o"></i> Pages</li>');
 
 			$('.loading, .noclick').toggle();
 		});
@@ -324,9 +328,9 @@ var FilesToDelete = [];
 		$('body').on('click', '[data-site]', function(){
 			$('.breadcrumb .fa-home').nextAll().remove();
 			if($(this).attr('data-pages')){
-				$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-branch="' + RepoBranch + '" data-url=' + RepoUrl + '>' + RepoName + '</span></span>');
+				$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-owner="' + RepoOwner + '" data-branch="' + RepoBranch + '" data-url=' + RepoUrl + '>' + RepoName + '</span></span>');
 			}
-			Root($(this).attr('data-site'), $(this).attr('data-branch'), $(this).attr('data-url'), $(this).attr('data-pages'));
+			Root($(this).attr('data-site'), $(this).attr('data-owner'), $(this).attr('data-branch'), $(this).attr('data-url'), $(this).attr('data-pages'));
 		});
 
 		
@@ -373,7 +377,7 @@ var FilesToDelete = [];
 		$('body').on('click', '[data-type="tree"], [data-type="dir"], [data-type="breadcrumb"]', function(){
 			if($(this).attr('data-type') === "tree"){
 				$('.breadcrumb .fa-home').nextAll().remove();
-				$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-branch="' + RepoBranch + '" data-url="' + RepoUrl + '">' + RepoName + '</span></span>');
+				$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-owner="' + RepoOwner + '" data-branch="' + RepoBranch + '" data-url="' + RepoUrl + '">' + RepoName + '</span></span>');
 			}else if($(this).attr('data-type') === "breadcrumb"){
 				$(this).parent('.folder').nextAll().remove();
 				$(this).parent('.folder').remove();
@@ -418,7 +422,7 @@ var FilesToDelete = [];
 	 		if($(this).attr('data-type') === "blob"){
 	 			if($(this).attr('data-name') === 'CNAME' || $(this).attr('data-name').match('.yml$') || $(this).attr('data-name').match('.xml$')){
 	 				$('.breadcrumb .fa-home').nextAll().remove();
-					$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-branch="' + RepoBranch + '" data-url="' + RepoUrl + '">' + RepoName + '</span></span>');
+					$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-owner="' + RepoOwner + '" data-branch="' + RepoBranch + '" data-url="' + RepoUrl + '">' + RepoName + '</span></span>');
 		 		}
 			}else if(!$(this).attr('data-name').match('.html$') && !$(this).attr('data-name').match('.md$') && !$(this).attr('data-name').match('.htm$')){
 				$('.breadcrumb').append('<span class="folder"><i class="fa fa-angle-double-right"></i> <span data-type="breadcrumb" data-path="' + ElementPath + '" data-name="' + ElementName + '">' + ElementName + '</span></span>');
@@ -435,7 +439,10 @@ var FilesToDelete = [];
 		$('#Editors .modal-footer .btn').click(function(){
 			if($(this).attr('data-type') === "blob"){
 				$('.breadcrumb .fa-home').nextAll().remove();//update the breadcrumb
-				$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-branch="' + RepoBranch + '" data-url="' + RepoUrl + '">' + RepoName + '</span></span><span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-branch="' + RepoBranch + '" data-url="' + RepoUrl + '" data-pages="' + true + '">Pages</span></span>');
+				$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-owner="' + RepoOwner + '" data-branch="' + RepoBranch + '" data-url="' + RepoUrl + '">' + RepoName + '</span></span>');
+				if($(this).attr('data-name').match('.md$') && $(this).attr('data-name') !== 'README.md' || $(this).attr('data-name').match('.html$') || $(this).attr('data-name').match('.htm$')){
+					$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-owner="' + RepoOwner + '" data-branch="' + RepoBranch + '" data-url="' + RepoUrl + '" data-pages="' + true + '">Pages</span></span>');
+				}
  			}else{
 				$('.breadcrumb').append('<span class="folder"><i class="fa fa-angle-double-right"></i> <span data-type="breadcrumb" data-path="' + ElementPath + '" data-name="' + ElementName + '">' + ElementName + '</span></span>');
 		 	}
