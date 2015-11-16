@@ -1,5 +1,0 @@
-//Place here your personal Access Token, you can go to our Readme if you need help
-	var AccessToken = '2d08f4fbe0866b005942b15aa713dee9785d4af9';
-
-//Html tab size
-	var htmlEditorTabSize = '2';
