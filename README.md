@@ -3,9 +3,10 @@ A new release have been published under the name "v.0.1.1", it contains some fix
 
 ##Changelog:
 
- 1. Fixed bug preventing from making changes on organizations repositories.
- 2. Improved image manager, now you don't need to set a predefined images path, the app tracks and lets you manage images on any folder.
- 3. Several minor improvements on the code, the file manager and file editors.
+1. Fixed bug preventing from making changes on organizations repositories.
+2. Improved image manager, now you don't need to set a predefined images path, the app tracks and lets you manage images on any folder.
+3. Main files are now linked externally so your code is always up to date without needing to download every new upgrade.
+4. Several minor improvements on the code, the file manager and file editors.
 
  
 # Meet Hyde 
