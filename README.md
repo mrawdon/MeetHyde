@@ -1,5 +1,5 @@
 # Update:
-A new release have been published under the name "v.0.1.1", it contains some fixes and now main files are linked externally so your code is always up to date without needing to download every new upgrade. So if you downloaded the previous release you Really should go to the "releases" tab to download the last one or simply follow this link: 
+A new release have been published under the name "v.0.1.1", it contains some fixes and now main files are linked externally so your code is always up to date without needing to download every new upgrade. So if you downloaded the previous release you Really should go to the "releases" tab to download the last one or follow this link: [MeetHyde last release](https://github.com/MeetHyde/MeetHyde/releases)
 
 ##Changelog:
 
