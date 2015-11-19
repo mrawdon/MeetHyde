@@ -170,6 +170,7 @@
 		.card {
 			margin-right: 10px;
 			border: 0.09rem solid #e5e5e5;
+			min-width: 15%;
 		}
 	
 	/*Tabs*/
