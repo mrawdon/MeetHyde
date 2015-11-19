@@ -33,24 +33,24 @@ function Api(method, url, callback, data, raw) {
 
 //Show Repos
   function Repos(callback) {
-    Api('GET', '/user/repos?type=public', callback);
+    Api('GET', '/user/repos?type=public&per_page=1000', callback);
   };
 
 //Show Tree
   function Tree(branch, callback){
-    Api('GET', RepoPath + 'git/trees/' + branch, function(data) {
+    Api('GET', RepoPath + 'git/trees/' + branch + '?per_page=1000', function(data) {
       callback(data.tree);
     });
   }
 
 //Show Folders Content
   function Content(path, branch, callback) {
-    Api('GET', RepoPath + 'contents' + (path ? '/' + encodeURI(path) : ''), callback, { ref: branch });
+    Api('GET', RepoPath + 'contents' + (path ? '/' + encodeURI(path) : '') + '?per_page=1000', callback, { ref: branch });
   };
 
 //Show Files Content
   function Read(path, branch, callback) {
-    Api('GET', RepoPath + 'contents/' + encodeURI(path) + '?ref=' + branch, function(data){
+    Api('GET', RepoPath + 'contents/' + encodeURI(path) + '?ref=' + branch + '&per_page=1000', function(data){
     	callback(window.atob(data.content));
     });
   };
@@ -249,7 +249,7 @@ var FrontMatter;
 			$.each(data, function( index, value ) {
 				_name = value.path.toLowerCase();
 				
-				if (_name.match('.md$') && _name !== 'readme.md' || _name.match('.html$') || _name.match('.htm$')){
+				if (_name.match('.md$') && _name !== 'readme.md' || _name.match('.html$') || _name.match('.htm$') || _name.match('.markdown$')){
 					if(_showPages){
 						$('#FTitle').text('Pages');
 						$('main .content').append('<div class="card" data-icon="' + value.type + '" ><div class="card-block"><i class="fa"> </i><div class="options"><span class="delete" data-path="' + value.path + '">delete</span></div></div><div class="card-footer" data-type="' + value.type + '" data-path="' + value.path + '" data-name="' + value.path + '" >' + value.path + ' <i class="fa"></i></div></div>');
@@ -374,11 +374,11 @@ CurrentName = _currentName;
 	 				$('.breadcrumb .fa-home').nextAll().remove();
 					$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-owner="' + RepoOwner + '" data-branch="' + RepoBranch + '" data-url="' + RepoUrl + '">' + RepoName + '</span></span>');
 		 		}
-			}else if(!$(this).attr('data-name').match('.html$') && !$(this).attr('data-name').match('.md$') && !$(this).attr('data-name').match('.htm$')){
+			}else if(!$(this).attr('data-name').match('.html$') && !$(this).attr('data-name').match('.md$') && !$(this).attr('data-name').match('.htm$') && !$(this).attr('data-name').match('.markdown$')){
 				$('.breadcrumb').append('<span class="folder"><i class="fa fa-angle-double-right"></i> <span data-type="breadcrumb" data-path="' + CurrentPath + '" data-name="' + CurrentName + '">' + CurrentName + '</span></span>');
 		 	}
 
-	 		if($(this).attr('data-name').match('.html$') || $(this).attr('data-name').match('.md$') || $(this).attr('data-name').match('.htm$')){
+	 		if($(this).attr('data-name').match('.html$') || $(this).attr('data-name').match('.md$') || $(this).attr('data-name').match('.htm$') || $(this).attr('data-name').match('.markdown$')){
 	 			$('#Editors .modal-footer .btn').attr('data-type', $(this).attr('data-type')).attr('data-name', $(this).attr('data-name')).attr('data-path', $(this).attr('data-path')).attr('data-class', $(this).attr('data-class'));
 	 			$('#Editors').modal('toggle');
 	 		}else if ($(this).attr('data-name') === 'CNAME'){
@@ -395,7 +395,7 @@ CurrentName = _currentName;
 			if($(this).attr('data-type') === "blob"){
 				$('.breadcrumb .fa-home').nextAll().remove();//update the breadcrumb
 				$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-owner="' + RepoOwner + '" data-branch="' + RepoBranch + '" data-url="' + RepoUrl + '">' + RepoName + '</span></span>');
-				if($(this).attr('data-name').match('.md$') && $(this).attr('data-name') !== 'README.md' || $(this).attr('data-name').match('.html$') || $(this).attr('data-name').match('.htm$')){
+				if($(this).attr('data-name').match('.md$') && $(this).attr('data-name') !== 'README.md' || $(this).attr('data-name').match('.html$') || $(this).attr('data-name').match('.htm$') || $(this).attr('data-name').match('.markdown$')){
 					$('.breadcrumb').append('<span class="repo"><i class="fa fa-angle-double-right"></i> <span data-site="' + RepoName + '" data-owner="' + RepoOwner + '" data-branch="' + RepoBranch + '" data-url="' + RepoUrl + '" data-pages="' + true + '">Pages</span></span>');
 				}
  			}else{
