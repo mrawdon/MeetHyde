@@ -6,7 +6,7 @@ function Api(method, url, callback, data, raw) {
   if(data && Object.keys(data).length > 1){
     data = JSON.stringify(data)
   }
-  
+
   $.ajax({
     type: method,
     url: url,
@@ -24,7 +24,7 @@ function Api(method, url, callback, data, raw) {
       callback(data.status);
     }
   });
-  
+
 }
 //Current user
   function CurrentUser(callback) {
@@ -61,9 +61,9 @@ function Api(method, url, callback, data, raw) {
       if(data === 403){//if file is bigger than 1mb it's not returned so look inside the container folder
         cut = path.lastIndexOf('/');
         fname = path.substring(cut + 1);
-        findIn = decodeURI(path).replace('/' + fname, ''); 
-        Content(findIn, branch, function(data){ 
-        	if(data === 403){ // If looking in the container folder throws error it's not in a folder but in the root 
+        findIn = decodeURI(path).replace('/' + fname, '');
+        Content(findIn, branch, function(data){
+        	if(data === 403){ // If looking in the container folder throws error it's not in a folder but in the root
         		Tree(branch, function(data){
 					    $.each(data, function( index, value ){
 		            if(value.path === decodeURI(path)){
@@ -125,7 +125,7 @@ function Api(method, url, callback, data, raw) {
       name: newName,
     });
   }
-  
+
 /*//Fork
   function Fork(forkUser, forkRepo, callback) {
     Api('POST', '/repos/' + forkUser + '/' + forkRepo + '/forks', callback);
@@ -190,7 +190,7 @@ var FrontMatter;
 		Repos(function(data) {
 			var _totalPages = 0;
 			$.each(data, function( index, value ) {
-				if(value.has_pages === true){ 
+				if(value.has_pages === true){
 					if(value.name === value.owner.login.toLowerCase() + '.github.io'){
 	      		var _url = value.html_url;
 	      		var _repoUrl = value.name;
@@ -214,7 +214,7 @@ var FrontMatter;
 				$('.loading, .noclick').toggle();
 			}
 		});
-		
+
 		//Append option to create a new website (in progress)
 			//$('main .content').append('<div id="fork" class="card" data-toggle="modal" data-target="#Fork"><div class="card-block"><i class="fa fa-plus-circle"></i> New</div><div class="card-footer">Create a new website <i class="fa fa-arrow-circle-o-right"></i></div></div>');
 	}
@@ -222,7 +222,7 @@ var FrontMatter;
 	//Call the function (its called on load or on click of .my-websites)
 		$('.my-websites').click(function(){
 			ShowWebsites();
-			
+
 		});
 
 //Show the tree for a website
@@ -233,22 +233,22 @@ var FrontMatter;
 		RepoBranch = _repoBranch;
 		RepoUrl = _repoUrl;
 
-		$('.loading, .noclick').toggle(); 
+		$('.loading, .noclick').toggle();
 		$('body').attr('data-content', 'tree');
 		$('main .content, main .images, aside ul, #FTitle').empty();
 		$('.title').text(RepoName).attr('data-site', RepoName).attr('data-owner', RepoOwner).attr('data-branch', RepoBranch).attr('data-url', RepoUrl);
 		if(!_showPages){
-			$('header .url').html('(<a href="http://' + RepoUrl + '" target="_blank">' + RepoUrl + '</a>)'); 
+			$('header .url').html('(<a href="http://' + RepoUrl + '" target="_blank">' + RepoUrl + '</a>)');
 			$('body').attr('data-pages', '0');
 		}else{
 			$('body').attr('data-pages', '1');
 		}
-		
+
 		Tree(RepoBranch, function(data) {
 			var _name;
 			$.each(data, function( index, value ) {
 				_name = value.path.toLowerCase();
-				
+
 				if (_name.match('.md$') && _name !== 'readme.md' || _name.match('.html$') || _name.match('.htm$') || _name.match('.markdown$')){
 					if(_showPages){
 						$('#FTitle').text('Pages');
@@ -260,7 +260,7 @@ var FrontMatter;
 							$('main .images').append('<div class="card image" data-name="' + value.name + '" data-path="' + value.path + '"><img src="https://raw.githubusercontent.com/' + RepoOwner + '/' + RepoName + '/' + RepoBranch + '/' + value.path + '"><div class="options"><span class="name">' + value.path + '</span><span class="delete" data-path="' + value.path + '">delete</span></div></div>');
 						}else if (_name !== '.ds_store' || _name !== '_site'){
 							$('main .content').append('<div class="card" data-icon="' + value.type + '" ><div class="card-block"><i class="fa"> </i><div class="options"><span class="delete" data-path="' + value.path + '">delete</span></div></div><div class="card-footer" data-type="' + value.type + '" data-path="' + value.path + '" data-name="' + value.path + '" >' + value.path + ' <i class="fa"></i></div></div>');
-							
+
 						}
 					}
 					$('aside ul').append('<li data-type="' + value.type + '" data-path="' + value.path + '" data-name="' + value.path + '"><i class="fa"></i> ' + value.path + '</li>');
@@ -285,8 +285,8 @@ var FrontMatter;
 		    $('[data-type="blob"]', this).prependTo(this);
 		    $('[data-type="tree"]', this).appendTo(this);
 			});
-		});	
-		$('.loading, .noclick').toggle(); 	
+		});
+		$('.loading, .noclick').toggle();
 	}
 	//Call the function (Header repo name, sidebar repo name, breadcrumb repo name)
 		$('body').on('click', '[data-site]', function(){
@@ -297,7 +297,7 @@ var FrontMatter;
 			Root($(this).attr('data-site'), $(this).attr('data-owner'), $(this).attr('data-branch'), $(this).attr('data-url'), $(this).attr('data-pages'));
 		});
 
-		
+
 // Show folder contents
 	function Open(_currentName, _currentPath){
 		CurrentName = _currentName;
@@ -306,7 +306,7 @@ var FrontMatter;
 		$('body').attr('data-content', 'dir').attr('data-pages', '0');
 		$('#FTitle').text(CurrentName);
 		$('main .content, main .images').empty();
-					
+
 		Content(CurrentPath, RepoBranch, function(data) {
 			var _name;
 			if(data !== 404){//if the function retrieves contents (when deleting files if the folder is left empty the folder is deleted too so the function returns error)
@@ -326,7 +326,7 @@ var FrontMatter;
 			$('.loading, .noclick').toggle();
 		});
 	}
-	//Call the function 
+	//Call the function
 		$('body').on('click', '[data-type="tree"], [data-type="dir"], [data-type="breadcrumb"]', function(){
 			if($(this).attr('data-type') === "tree"){
 				$('.breadcrumb .fa-home').nextAll().remove();
@@ -349,11 +349,11 @@ CurrentName = _currentName;
 		$('body').attr('data-content', 'file').attr('data-pages', '0');
 		$('#FTitle').text(CurrentName);
 		$('main .content, main .images').empty();
-		
+
 		Read(CurrentPath, RepoBranch, function(data) {
 			if(_editor === 'md'){
 				if(data.substring(0, 4) === "---\n"){ //Extract Front Matter
-					FrontMatter = $.trim(data.split('---')[1].split('---')[0]); 
+					FrontMatter = $.trim(data.split('---')[1].split('---')[0]);
 					data = data.replace(FrontMatter , '');
 					data = data.replace('---' , '');
 					data = $.trim(data.replace('---' , ''));
@@ -390,7 +390,7 @@ CurrentName = _currentName;
 	 			Edit($(this).attr('data-name'), $(this).attr('data-path'), 'html')
 	 		}
 		});
-		
+
 		$('#Editors .modal-footer .btn').click(function(){
 			if($(this).attr('data-type') === "blob"){
 				$('.breadcrumb .fa-home').nextAll().remove();//update the breadcrumb
@@ -410,7 +410,7 @@ CurrentName = _currentName;
 		$(_location).html('<pre id="editor"></pre>');
 		$('main .content').append('<div class="fileActions">' + SaveBtn + '</div>');
 		$('.fileActions .btn').html('<i class="fa fa-check"></i> Up to date');
-		
+
 		var editor = ace.edit("editor");
 		editor.$blockScrolling = Infinity;
 		editor.session.setMode("ace/mode/html");
@@ -422,7 +422,7 @@ CurrentName = _currentName;
 
 		editor.setValue(_data, -1);
 		editor.getSession().setTabSize(htmlEditorTabSize);
-			
+
 		editor.on('input', function() {
 			if(_data === editor.getValue()){
 				$('.fileActions .btn').html('<i class="fa fa-check"></i> Up to date').attr('disabled', true);
@@ -444,10 +444,10 @@ CurrentName = _currentName;
 //Markdown editor
 	function mdEditor(_data, _fm){
 		$('main .content').html('<ul class="nav nav-tabs" role="tablist"><li class="nav-item"><a class="nav-link active" href="#editContent" role="tab" data-toggle="tab">Content</a></li><li class="nav-item"><a class="nav-link" href="#editFm" role="tab" data-toggle="tab">Front Matter</a></li></ul><div class="tab-content"><div role="tabpanel" class="tab-pane active" id="editContent"><textarea class="form-control" id="mdEditor"></textarea></div><div role="tabpanel" class="tab-pane" id="editFm"></div></div><div id="saveInMd" class="hidden"></div>');
-		
+
 		htmlEditor(_fm, '#editFm');
-		
-		var simplemde = new SimpleMDE({ 
+
+		var simplemde = new SimpleMDE({
 					element: document.getElementById("mdEditor"),
 					spellChecker: false,
 					tabSize: 4,
@@ -471,7 +471,7 @@ CurrentName = _currentName;
 					            title: "Insert Image",
 					          },
 										"|" ,
-										"side-by-side", 
+										"side-by-side",
 										{
 					            name: "expand",
 					            action: mdexpand,
@@ -555,13 +555,13 @@ CurrentName = _currentName;
 		}
 
 		simplemde.value(_data);
-		
+
 		$('.editor-toolbar .fa-columns').trigger( 'click' );
 		$('.fa-arrows-alt:not(.expand)').hide();
 		$('main .content').wrapInner('<div id="md-editor" class="nofull" />');
 		$('.editor-toolbar').append('<div class="fileActions">' + SaveBtn + '</div>');
 		$('.editor-toolbar .actions').toggle();
-		
+
 		simplemde.codemirror.on("change", function(){
 			if(_data === simplemde.value()){
 				$('.fileActions .btn').html('<i class="fa fa-check"></i> Up to date').attr('disabled', true);
@@ -612,10 +612,10 @@ CurrentName = _currentName;
 				});
 			}else{
 				$('#MdImage .breadcrumb').html('<span data-path="">' + RepoName + '</span>');
-				Tree(RepoBranch, function(data) { 
+				Tree(RepoBranch, function(data) {
 					$.each(data, function( index, value ) {
 						if(value.type === 'tree'){
-							$('#MdImage .folders').append('<div class="folder" data-path="' + value.path + '"><i class="fa fa-folder-open-o"></i><div>' + value.path + '</div></div>'); 
+							$('#MdImage .folders').append('<div class="folder" data-path="' + value.path + '"><i class="fa fa-folder-open-o"></i><div>' + value.path + '</div></div>');
 						}else if(value.path.match('.jpg$') || value.path.match('.png$') || value.path.match('.JPG$') || value.path.match('.PNG$') || value.path.match('.gif$') || value.path.match('.GIF$') || value.path.match('.svg$') || value.path.match('.SVG$')){
 							$('#MdImage .files').append('<div class="image"><img class="cardSelect" src="https://raw.githubusercontent.com/' + RepoOwner + '/' + RepoName + '/' + RepoBranch + '/' + value.path + '"><div class="options"><span class="name">' + value.path + '</span></div><div data-name="' + value.name + '" data-url="https://raw.githubusercontent.com/' + RepoOwner + '/' + RepoName + '/' + RepoBranch + '/' + value.path + '" class="btn btn-success btn-block"><i class="fa fa-check"></i>Add</div></div>');
 						}
@@ -665,7 +665,7 @@ CurrentName = _currentName;
 				//Close the dropbox
 					$('body').on('click', '.uploader .btn-danger', function(){
 						$('#MdImage .uploader, #MdImage .folders, #MdImage .files').toggle();
-						$('form.dropzone .dz-preview').remove(); 
+						$('form.dropzone .dz-preview').remove();
 						$('form.dropzone').removeClass('dz-started');
 					});
 				//Upload the images
@@ -684,7 +684,7 @@ CurrentName = _currentName;
 						}else {
 							$('#MdImage .uploading, .noclick').toggle();
 							$('#MdImage .manager-drop img').each(function(){
-								_base = $(this).attr('src'); 
+								_base = $(this).attr('src');
 								_baseClean = _base.replace('data:image/png;base64,','');
 								_imgName = $(this).attr('alt');
 								Create(_saveIn + _imgName, RepoBranch, _baseClean, 'uploaded by' + UserLogin, function(err) {
@@ -713,11 +713,11 @@ CurrentName = _currentName;
 						_imageUrl = $(this).val();
 						$(this).parent().next().children().attr('src', _imageUrl);
 					});
-					$('#insertUrl').on('hidden.bs.modal', function () { 
+					$('#insertUrl').on('hidden.bs.modal', function () {
 					  $('#insertUrl input').val('');
 					  $('#insertUrl img').attr('src', '');
 					});
-		
+
 		//Clear data on close
 		  $('#MdImage').on('hidden.bs.modal', function () {
 			  $('#MdImage .folders, #MdImage .files, #MdImage .images').empty();
@@ -726,13 +726,13 @@ CurrentName = _currentName;
 //Save files
 	function saveChanges(_html, _md){
 		var _saveContent;
-		
+
 		if ($("#commit").val()) {
 		  CommitMsg = $("#commit").val();
 		}
-		
+
 		$('.fileActions .btn').html('<div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>').attr('disabled', true);//content for the button
-		
+
 		if (_md){//If the editing is being made with MarkDown
 			if (_html.indexOf("Replace this text with your Front Matter block.") >= 0){
 				_saveContent = _md;
@@ -742,9 +742,9 @@ CurrentName = _currentName;
 				_saveContent = '---\n' + $.trim(_html) + '\n---\n' + _md;
 			}
 		}else { //If the editing is being made with Html
-			_saveContent = _html; 
+			_saveContent = _html;
 		}
-		
+
 		Write(CurrentPath, RepoBranch, window.btoa(_saveContent), CommitMsg, function(data) {
 			$('main .content').empty();
 			if(_md){
@@ -777,7 +777,7 @@ CurrentName = _currentName;
 		});
   });
 
-//Get current date 
+//Get current date
 	function CurrentDate(){
 		var d = new Date();
 		var month = d.getMonth()+1;
@@ -834,7 +834,7 @@ CurrentName = _currentName;
 			}else{
 				Root(RepoName, RepoOwner, RepoBranch, RepoUrl);
 			}
-				
+
 			$('#createFile .modal-footer').html('<button type="button" class="btn btn-success use-images" disabled><i class="fa fa-ban"></i></button>');
 		});
 	});
@@ -848,7 +848,7 @@ CurrentName = _currentName;
 	  thumbnailWidth: null,
 	  thumbnailHeight: null,
 	  init: function() {
-	    this.on("thumbnail", function(file, dataUrl) { 
+	    this.on("thumbnail", function(file, dataUrl) {
 	    	$('img[alt="' + file.name + '"]').parent().next().append('<div class="dz-remove"><i class="fa fa-times-circle"></i> Remove</div>');
 	    });
 	  }
@@ -881,7 +881,7 @@ CurrentName = _currentName;
 		var _currentName = CurrentName;
 		$('.upload').attr('disabled', true);
 		$('#uploadFile, #Uploading').modal('toggle');
-		
+
 		if (_filesToUpload === 0) {
 		  alert('There are no images to upload');
 		}else {
@@ -899,7 +899,7 @@ CurrentName = _currentName;
 					_saveIn = '';
 				}
 			}
-			
+
 			$('#uploadFile .addimage-drop img').each(function(){
 				_content = $(this).attr('src').replace('data:image/png;base64,','');
 				_imgName = $(this).attr('alt');
@@ -907,7 +907,7 @@ CurrentName = _currentName;
 					$('#Uploading .progress').attr('value', parseFloat($('#Uploading .progress').attr('value')) + parseFloat(_augmentIn));
 					$('#Uploading .percent').text(Math.floor(parseInt($('#Uploading .progress').attr('value'))) + ' %');
 					_imagesUploaded += 1;
-					if(_imagesUploaded === _filesToUpload){ 
+					if(_imagesUploaded === _filesToUpload){
 						if(_currentName === CurrentName){
 							if($('body').attr('data-content') === 'dir'){
 								Open(CurrentName, CurrentPath);
@@ -918,7 +918,7 @@ CurrentName = _currentName;
 								Root(RepoName, RepoOwner, RepoBranch, RepoUrl);
 							}
 						}
-						
+
 						$('#UploadSuccess, #Uploading').modal('toggle');
 						$('.upload').attr('disabled', false);
 						$('#uploadFile form.addimage-drop .dz-preview').remove();
@@ -932,7 +932,7 @@ CurrentName = _currentName;
 			});
 		}
 	});
-	$('#uploadFile').on('hidden.bs.modal', function () { 
+	$('#uploadFile').on('hidden.bs.modal', function () {
 		$('#uploadFile form.addimage-drop .dz-preview').remove();
 		$('#uploadFile #filename').val('');
 	});
@@ -964,4 +964,3 @@ CurrentName = _currentName;
 			});
 		});
 	});*/
-

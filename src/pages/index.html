@@ -1,26 +1,10 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Meet Hyde - Admin</title>
-
-		<link rel="stylesheet" href="css/bootstrap.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Lato">
-		<link rel="stylesheet" href="http://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/dropzone/4.2.0/dropzone.min.css">
-		<link rel="stylesheet" href="css/style.css">
-	</head>
-	<body class="container-fluid" data-content="sites">
-		<!-- loading -->
+<!-- loading -->
 			<div class="loading">
 				<div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>
 			</div>
 		<!-- deleting -->
 			<div class="deleting">
-				<div class="text"><b>Please wait, your files are being deleted</b></div>
+				<div class="text"><b>Please wait, files are being deleted</b></div>
 				<div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>
 				<progress class="progress progress-striped progress-animated" value="0" max="100"></progress>
 				<div class="percent">0 %</div>
@@ -72,7 +56,7 @@
 						<div class="images card-columns"></div>
 					</main>
 			</div>
-		
+
 		<!-- modals -->
 			<!-- CNAME -->
 				<div id="CNAME" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -114,7 +98,7 @@
 				    </div>
 				  </div>
 				</div>
-			
+
 			<!-- MdImage -->
 				<div id="MdImage" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 				  <div class="modal-dialog">
@@ -132,11 +116,11 @@
 				      	<div class="loading">
 									<div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>
 								</div>
-								
-				        
+
+
 			        	<div class="folders"></div>
 			        	<div class="files"></div>
-			        	
+
 			        	<div class="uploader">
 			        		<form action="/file-upload" class="dropzone manager-drop" id="MdUploader"></form>
 			        		<button type="button" class="btn btn-success"><i class="fa fa-check"></i> Upload</button>
@@ -354,22 +338,3 @@
 				    </div>
 				  </div>
 				</div>
-			
-			
-		<footer>
-			<!-- Javascript -->
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-			<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
-			<script src="https://cdn.jsdelivr.net/ace/1.2.1/min/ace.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ext-themelist.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.2/ext-emmet.js"></script>
-			<script src="https://cloud9ide.github.io/emmet-core/emmet.js"></script>
-			<script src="http://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-			<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-			<script src='https://cdn.jsdelivr.net/mousewheel/3.1.9/jquery.mousewheel.min.js'></script>
-			<script src="https://cdn.jsdelivr.net/dropzone/4.2.0/dropzone.min.js"></script>
-			
-			<script src="js/config.js"></script>
-			<script src="js/js.js"></script>
-		</footer>
-	</body>
