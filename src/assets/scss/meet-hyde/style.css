@@ -14,7 +14,7 @@
 		.bug.alert-dismissible .close {
 			right: 0;
 		}
-	
+
 	html {
 		overflow: visible!important;
 	}
@@ -66,21 +66,8 @@
 		color: #16ab9a;
 	}
 
-	.btn-success {
-		background-color: #16ab9a;
-		border-color: #16ab9a;
-	}
-	.btn-success::hover;
-	.btn-success::focus;
-	.btn-success::active {
-		background-color: #0d8575;
-		border-color: #0d8575;
-	}
-	.btn-circle {
-		padding: .20rem .375rem;
-    border-radius: 50%;
-  }
-  
+	
+
 	/*loading icon*/
 		.loading, .uploading, .deleting {
 			background: rgba(22,171,154, .8);
@@ -130,10 +117,10 @@
 		}
 
 		@keyframes sk-bounce {
-		  0%, 100% { 
+		  0%, 100% {
 		    transform: scale(0.0);
 		    -webkit-transform: scale(0.0);
-		  } 50% { 
+		  } 50% {
 		    transform: scale(1.0);
 		    -webkit-transform: scale(1.0);
 		  }
@@ -166,13 +153,13 @@
 			cursor: wait;
 		}
 
-	/*general card styles*/	
+	/*general card styles*/
 		.card {
 			margin-right: 10px;
 			border: 0.09rem solid #e5e5e5;
 			min-width: 15%;
 		}
-	
+
 	/*Tabs*/
 		#editContent {
 			position: relative;
@@ -254,11 +241,11 @@
 	}
 
 	.breadcrumb {
-		padding: 0; 
-    margin-bottom: 0; 
-    list-style: none; 
-    background-color: transparent; 
-    border-radius: 0; 
+		padding: 0;
+    margin-bottom: 0;
+    list-style: none;
+    background-color: transparent;
+    border-radius: 0;
     font-size: 13px;
     flex-grow: 2;
     text-align: right;
@@ -283,7 +270,7 @@
 		overflow: auto;
 	}
 
-	.toggled aside { 
+	.toggled aside {
 		display: none;
 	}
 
@@ -313,7 +300,7 @@
 		color: #f5f5f5;
 		margin-top: 4px;
 	}
-	
+
 	aside .list {
 		display: none;
 	}
@@ -329,7 +316,7 @@
 		padding-left: 10px;
 		margin-top: 10px;
 	}
-	
+
 	aside li .fa {
 		margin-right: 10px;
 	}
@@ -430,7 +417,7 @@
 		bottom: 10px;
 		right: 5px;
 	}*/
-	
+
 
 	/*show files before folders*/
 		[data-type="blob"].card,
@@ -487,7 +474,7 @@
 			li[data-type="tree"] i::before {
 				content: "\f115";
 			}
-		
+
 		/*button to add files or folders*/
 			[data-content="dir"] main,
 			[data-content="tree"] main {
@@ -508,7 +495,7 @@
 			display: flex;
 			flex-wrap: wrap;
 		}
-		
+
 		[data-content="dir"] main .content .card,
 		[data-content="tree"] main .content .card {
 			min-width: 19%;
@@ -696,7 +683,7 @@
 		    background: #fcfcfc;
 		    border-color: #95a5a6;
 			}
-				
+
 /*Footer*/
 	/*Modals*/
 		.modal {
@@ -713,7 +700,7 @@
 		.modal-content {
 			max-height: calc(100vh - 60px);
 		}
-		
+
 		/*Image manager*/
 			#MdImage .modal-dialog {
 				width: 70%!important;
@@ -864,10 +851,10 @@
 			#uploadFile .modal-dialog {
 				width: 70%!important;
 			}
-			
+
 			#uploadFile .modal-content {
 			  height: calc(100vh - 60px);
-			}	
+			}
 
 			#uploadFile .modal-body {
 				overflow: auto;
