@@ -1,7 +1,8 @@
-See first: https://github.com/MeetHyde/MeetHyde/
+This is fork. See https://github.com/MeetHyde/MeetHyde/ for the master.
 
+This branch is the work of @whaleen developing a front-end development environment for MeetHyde. It is introducing dependency management, sass control over a modularized Bootstrap, a static site generation capability and other nice things listed below.
 
-# MeetHyde Front Stack
+## MeetHyde Front Stack
 
 - Handlebars HTML templates with Panini
 - Sass compilation and prefixing
@@ -25,7 +26,7 @@ To use this, your computer needs:
 To manually set up, first download with Git:
 
 ```bash
-git clone https://github.com/whaleen/meet-hyde-front-stack
+git clone https://github.com/whaleen/MeetHyde
 ```
 
 Then open the folder in your command line, and install the needed dependencies:
