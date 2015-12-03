@@ -2,6 +2,7 @@
 			<div class="loading">
 				<div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>
 			</div>
+
 		<!-- deleting -->
 			<div class="deleting">
 				<div class="text"><b>Please wait, files are being deleted</b></div>
@@ -9,28 +10,15 @@
 				<progress class="progress progress-striped progress-animated" value="0" max="100"></progress>
 				<div class="percent">0 %</div>
 			</div>
+
 		<!-- no click -->
 			<div class="noclick"></div>
-		<!-- fixed header -->
-			<header class="row">
-				<div id="logo" class="col-sm-2">
-					<button id="toggle" type="button" class="btn btn-secondary"><i class="fa fa-bars"></i></button>
-					<img src="{{root}}src/assets/img/logo.png" alt="">
-				</div>
-				<div class="col-sm-10">
-					<div class="repo">
-						<span class="title h4"></span>
-						<span class="url"></span>
-					</div>
-					<div class="main-nav">
-						<button id="back" type="button" class="btn btn-sm btn-secondary"><i class="fa fa-arrow-left"></i></button>
-						<div id="FTitle" class="h5"></div>
-						<div class="breadcrumb">
-							<i class="fa fa-home my-websites"></i>
-						</div>
-					</div>
-				</div>
-			</header>
+
+
+
+
+			{{> header}}
+
 
 		<!-- content -->
 			<div class="row">
@@ -174,7 +162,7 @@
 									</div>
 					      </div>
 					      <div class="modal-footer">
-					      	<button type="button" class="btn btn-secondary" data-dismiss="modal">Take me back</button>
+					      	<button type="button" class="btn" data-dismiss="modal">Take me back</button>
 					      	<button id="Confirm" type="button" class="btn btn-danger" data-dismiss="modal">Confrim</button>
 					      </div>
 					    </div>
@@ -194,8 +182,8 @@
 				        <div class="lead">Choose the editor you'll like to use for this file</div>
 				      </div>
 				      <div class="modal-footer">
-				      	<button type="button" class="btn btn-secondary html" data-editor="html">HTML</button>
-				      	<button type="button" class="btn btn-secondary md" data-editor="md">MarkDown</button>
+				      	<button type="button" class="btn html" data-editor="html">HTML</button>
+				      	<button type="button" class="btn md" data-editor="md">MarkDown</button>
 				      </div>
 				    </div>
 				  </div>

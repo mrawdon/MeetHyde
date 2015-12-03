@@ -66,7 +66,7 @@
 		color: #16ab9a;
 	}
 
-	
+
 
 	/*loading icon*/
 		.loading, .uploading, .deleting {
@@ -126,13 +126,7 @@
 		  }
 		}
 
-		.uploading, .deleting {
-			display: none;
-			text-align: center;
-			padding: 0 30px;
-			background-color: rgb(137) 87, 67,;
-			color: #fff;
-		}
+		
 
 		.uploading .text, .deleting .text {
 			margin-top: calc(50vh - 120px);
@@ -153,12 +147,7 @@
 			cursor: wait;
 		}
 
-	/*general card styles*/
-		.card {
-			margin-right: 10px;
-			border: 0.09rem solid #e5e5e5;
-			min-width: 15%;
-		}
+
 
 	/*Tabs*/
 		#editContent {
@@ -172,18 +161,7 @@
 			padding: 5px;
 		}
 
-/*Header*/
-	header {
-		height: 67px;
-		border-bottom: 2px solid #e5e5e5;
-	  display: flex;
-	}
 
-	header .row {
-		position: fixed;
-		top: 0;
-		width: 100%;
-	}
 
 	#toggle {
 		font-size: 19px;
@@ -399,24 +377,7 @@
 		[data-icon="dir"] .options {
 			display: none;
 		}
-	/*.card-block .options .rename {
-		top: 10px;
-		left: 5px;
-	}
-	.card-block .options .move {
-		top: 10px;
-		right: 5px;
-	}
-	.card-block .options .delete {
-		bottom: 10px;
-		left: 5px;
-		background-color: #c9302c;
-		color: #fff;
-	}
-	.card-block .options .select {
-		bottom: 10px;
-		right: 5px;
-	}*/
+
 
 
 	/*show files before folders*/

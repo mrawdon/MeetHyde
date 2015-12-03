@@ -24,7 +24,10 @@ var PATHS = {
   ],
   sass: [
     'bower_components/bootstrap-sass/assets/stylesheets/',
-    'bower_components/font-awesome/scss/'
+    'bower_components/font-awesome/scss/',
+    'src/assets/css/**/*.css',
+    'src/assets/css/**/*.*.css'
+
   ],
   javascript: [
     'bower_components/jquery/dist/jquery.js', //
@@ -131,7 +134,7 @@ gulp.task('images', function() {
 
 // Build the "dist" folder by running all of the above tasks
 gulp.task('build', function(done) {
-  sequence('clean', ['pages', 'sass', 'javascript', 'images', 'copy'], done);
+  sequence('clean', ['pages', 'sass', 'javascript', 'images', 'copy', 'icons'], done);
 });
 
 // Start a server with LiveReload to preview the site in
@@ -149,4 +152,6 @@ gulp.task('default', ['build', 'server'], function() {
   gulp.watch(['src/assets/scss/**/*.scss'], ['sass', browser.reload]);
   gulp.watch(['src/assets/js/**/*.js'], ['javascript', browser.reload]);
   gulp.watch(['src/assets/img/**/*'], ['images', browser.reload]);
+  gulp.watch(['src/assets/css/**/*'], ['images', browser.reload]);
+
 });
