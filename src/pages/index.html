@@ -38,6 +38,7 @@
 					<main class="col-sm-10">
 						<div id="CreateUpload">
 							<button type="button" class="create btn btn-success btn-sm" data-toggle="modal" data-target="#createFile"><i class="fa fa-plus-circle"></i> Create new file</button>
+							<button type="button" class="create btn btn-success btn-sm" data-toggle="modal" data-target="#createPost"><i class="fa fa-plus-circle"></i> Create post</button>
 							<button type="button" class="upload btn btn-success btn-sm" data-toggle="modal" data-target="#uploadFile"><i class="fa fa-cloud-upload"></i> Upload images</button>
 						</div>
 						<div class="content"></div>
@@ -212,6 +213,94 @@
 				      <div class="modal-footer">
 				      	<button type="button" class="btn btn-success" disabled><i class="fa fa-ban"></i></button>
 				      </div>
+				    </div>
+				  </div>
+				</div>
+
+				<!-- add post -->
+				<div id="createPost" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+							<div class="modal-header">
+				      	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true"><i class="fa fa-close"></i></span>
+				        </button>
+							</div>
+				      <div class="modal-body">
+								<div class="">
+				        <form>
+								  <div class="form-group">
+								    <label for="postTitle">Title</label>
+								    <input type="text" class="form-control" id="postTitle">
+								  </div>
+									<div class="form-group">
+								    <label for="postCategory">Post Type</label>
+								    <select class="form-control" id="postCategory">
+												<option value="lessons">Lesson</option>
+												<option value="assignments">Assignment</option>
+										</select>
+								  </div>
+								</form>
+							</div>
+							</div>
+				      <div class="modal-footer">
+				      	<button type="button" class="btn btn-success" disabled><i class="fa fa-ban"></i></button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+			<!-- set token -->
+				<div id="setToken" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true"><i class="fa fa-close"></i></span>
+				        </button>
+							</div>
+				      <div class="modal-body">
+								<div class="">
+				        <form>
+								  <div class="form-group">
+								    <label for="postTitle">Access Token</label>
+								    <input type="text" class="form-control" id="AccessToken">
+								  </div>
+									<div class="form-group">
+									<a href="https://github.com/meethyde/MeetHyde/blob/master/README.md#how-to-set-up-meethyde">Follow these instructions to generate token</a>
+									</div>
+								</form>
+							</div>
+							</div>
+				      <div class="modal-footer">
+				      	<button type="button" class="btn btn-success" disabled><i class="fa fa-ban"></i></button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<!-- add images/folders -->
+				<div id="attachFile" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				      	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true"><i class="fa fa-close"></i></span>
+				        </button>
+							</div>
+							<div class="modal-body">
+								<div class="header">
+									<p>Choose a file to attach</p>
+					      </div>
+				      	<div class="uploader">
+			        		<form action="/file-upload" class="dropzone addimage-drop" id="attachFile"></form>
+			        	</div>
+							</div>
+							<div class="uploading">
+								<div class="text"><b>Please wait, your images are being uploaded</b></div>
+								<div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>
+								<progress class="progress progress-striped progress-animated" value="0" max="100"></progress>
+								<div class="percent">0 %</div>
+							</div>
 				    </div>
 				  </div>
 				</div>

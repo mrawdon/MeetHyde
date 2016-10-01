@@ -181,8 +181,8 @@
 	}
 
 	header img {
-		width: 74%;
-		max-height: 65px;
+		width: 74px;
+		height: 65px;
 	}
 
 	header .repo {
@@ -599,7 +599,7 @@
 			height: 400px;
 		}
 
-		.editor-preview-side {
+		.tab-pane .editor-preview-side {
 			z-index: 1;
 		}
 

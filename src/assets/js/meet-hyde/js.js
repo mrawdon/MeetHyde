@@ -1,3 +1,22 @@
+if(!AccessToken){
+	$('#setToken').modal('toggle');
+	$('body').on('click', '#setToken .modal-footer .create', function () {
+
+			$('#setToken .modal-footer').html('<button type="button" class="btn btn-success use-images" disabled><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></button>');
+			var token = $('#setToken form input').val();
+			localStorage.setItem('AccessToken',token);
+			location.reload()
+	});
+
+	$('#setToken input').on('change', function(){
+		if($(this).val().length === 0){
+			$('#setToken .modal-footer').html('<button type="button" class="btn btn-success use-images" disabled><i class="fa fa-ban"></i></button>');
+		}else if($(this).val().length > 1) {
+			$('#setToken .modal-footer').html('<button type="button" class="create btn btn-success use-images"><i class="fa fa-check"></i> Create</button>');
+		}
+	});
+}
+
 function Api(method, url, callback, data, raw) {
   url = 'https://api.github.com' + url;
   url += ((/\?/).test(url) ? '&' : '?');
@@ -196,9 +215,9 @@ var FrontMatter;
 	      		var _repoUrl = value.name;
 	      		var _branch = 'master'
 	      	}else {
-	      		var _url = value.html_url + '/tree/gh-pages';
+	      		var _url = value.html_url + '/tree/'+branchName;
 	      		var _repoUrl = UserLogin.toLowerCase() + '.github.io' + '/' + value.name;
-	      		var _branch = 'gh-pages'
+	      		var _branch = branchName;
 	      	}
 	      	$('main .content').append('<div class="card"><div class="card-block"><a href="' + _url + '" target="_blank"><i class="fa fa-github-square"></i></a> ' + value.name + '</div><div data-site="' + value.name + '" data-owner="' + value.owner.login.toLowerCase() + '" data-branch="' + _branch + '" data-url="' + _repoUrl + '" class="card-footer">Manage <i class="fa fa-arrow-circle-o-right"></i></div></div>');
 	      	_totalPages += 1;
@@ -342,7 +361,7 @@ var FrontMatter;
 		});
 
 //Show file contents
-	function Edit(_currentName, _currentPath, _editor){
+	function Edit(_currentName, _currentPath, _editor, FrontMatter){
 CurrentName = _currentName;
 		CurrentPath = _currentPath;
 		$('.loading, .noclick').toggle();
@@ -357,8 +376,6 @@ CurrentName = _currentName;
 					data = data.replace(FrontMatter , '');
 					data = data.replace('---' , '');
 					data = $.trim(data.replace('---' , ''));
-				}else{ //Set a default Front Matter (wont be saved)
-					FrontMatter = 'Replace this text with your Front Matter block.\n\n! TIP: You can skip the triple-dashed lines (---), they will be added automatically';
 				}
 				mdEditor(data, FrontMatter);
 			}else{
@@ -379,8 +396,9 @@ CurrentName = _currentName;
 		 	}
 
 	 		if($(this).attr('data-name').match('.html$') || $(this).attr('data-name').match('.md$') || $(this).attr('data-name').match('.htm$') || $(this).attr('data-name').match('.markdown$')){
-	 			$('#Editors .modal-footer .btn').attr('data-type', $(this).attr('data-type')).attr('data-name', $(this).attr('data-name')).attr('data-path', $(this).attr('data-path')).attr('data-class', $(this).attr('data-class'));
-	 			$('#Editors').modal('toggle');
+	 			//$('#Editors .modal-footer .btn').attr('data-type', $(this).attr('data-type')).attr('data-name', $(this).attr('data-name')).attr('data-path', $(this).attr('data-path')).attr('data-class', $(this).attr('data-class'));
+	 			//$('#Editors').modal('toggle');
+				 Edit($(this).attr('data-name'), $(this).attr('data-path'),'md');
 	 		}else if ($(this).attr('data-name') === 'CNAME'){
 	 			$('#CNAME').modal('toggle');
 	 			Read('CNAME', RepoBranch, function(data) {
@@ -469,6 +487,12 @@ CurrentName = _currentName;
 					            className: "insert-image fa fa-times",
 					            action: _drawImage,
 					            title: "Insert Image",
+					          },
+										{
+					            name: "attach",
+					            className: "fa fa-paperclip",
+					            action: searchFile,
+					            title: "Attach File",
 					          },
 										"|" ,
 										"side-by-side",
@@ -586,6 +610,10 @@ CurrentName = _currentName;
 		function searchImage(){
 			$('#MdImage').modal('toggle');
 			MdImage();
+		}
+		function searchFile(editor){
+			$('#attachFile').modal('toggle');
+			$('#attachFile').data('editor',editor)
 		}
 
 	//Markdown image manager
@@ -808,7 +836,7 @@ CurrentName = _currentName;
 		}
 	});
 
-	$('body').on('click', '#createFile .modal-footer .create', function () {
+$('body').on('click', '#createFile .modal-footer .create', function () {
 		var _newFile;
 
 		$('#createFile .modal-footer').html('<button type="button" class="btn btn-success use-images" disabled><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></button>');
@@ -843,6 +871,36 @@ CurrentName = _currentName;
 	  $('#createFile input').val('');
 	});
 
+	$('body').on('click', '#createPost .modal-footer .create', function () {
+
+		$('#createPost .modal-footer').html('<button type="button" class="btn btn-success use-images" disabled><div class="spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></button>');
+			var title = $('#createPost form input').val();
+			var category = $('#createPost form select').val();
+			var	_newFile = '_posts/' + CurrentDate() + title+'.md';
+			var frontMatter = 'layout:post\ntitle : '+title+'\ncategory:'+category;
+
+		Create(_newFile, RepoBranch, window.btoa(''), 'created by' + UserLogin, function(data) {
+			$('#createPost').modal('toggle');
+			Edit(title,_newFile, 'md',frontMatter);
+		
+
+			$('#createPost .modal-footer').html('<button type="button" class="btn btn-success use-images" disabled><i class="fa fa-ban"></i></button>');
+		});
+	});
+	$('#createPost').on('hidden.bs.modal', function () { //Clear values on modal close
+	  $('#createFile .modal-footer').html('<button type="button" class="btn btn-success use-images" disabled><i class="fa fa-ban"></i></button>');
+	  $('#createFile input').val('');
+	});
+
+
+	$('#createPost input').on('input', function(){
+		if($(this).val().length === 0){
+			$('#createPost .modal-footer').html('<button type="button" class="btn btn-success use-images" disabled><i class="fa fa-ban"></i></button>');
+		}else if($(this).val().length === 1) {
+			$('#createPost .modal-footer').html('<button type="button" class="create btn btn-success use-images"><i class="fa fa-check"></i> Create</button>');
+		}
+	});
+
 //Upload files
 	Dropzone.options.addFromFolder = { //Disable image resize
 	  thumbnailWidth: null,
@@ -852,6 +910,41 @@ CurrentName = _currentName;
 	    	$('img[alt="' + file.name + '"]').parent().next().append('<div class="dz-remove"><i class="fa fa-times-circle"></i> Remove</div>');
 	    });
 	  }
+	}
+	Dropzone.options.attachFile = { //Disable image resize
+		addedfile: function(file) {
+			console.log(file);
+			 var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = function(e) {
+          Create('uploads/' + file.name, RepoBranch, window.btoa(e.target.result), 'uploaded by' + UserLogin, function(res) {
+						
+							if(res === 422){
+								alert('File already exists, change the filename or delete the existing file if you want to update it');
+							}else if(!res.commit){
+								alert('Unable to upload',res);
+								return;
+							}
+							
+							var editor = $('#attachFile').data('editor');
+							var cm = editor.codemirror;
+							var doc = cm.getDoc();
+							var cursor = doc.getCursor(); // gets the line number in the cursor position
+							var line = doc.getLine(cursor.line); // get the line contents
+							var pos = { // create a new object to avoid mutation of the original selection
+									line: cursor.line,
+									ch: line.length - 1 // set the character position to the end of the line
+							}
+							doc.replaceRange('\n['+file.name+'](/uploads/' + file.name + ')\n', pos); // adds a new line
+						
+							$('#attachFile').modal('toggle');
+						
+					});
+      };
+			// Read in the image file as a data URL.
+      reader.readAsBinaryString(file);
+		}
 	}
 	Dropzone.options.MdUploader = { //Disable image resize
 	  thumbnailWidth: null,
@@ -901,7 +994,7 @@ CurrentName = _currentName;
 			}
 
 			$('#uploadFile .addimage-drop img').each(function(){
-				_content = $(this).attr('src').replace('data:image/png;base64,','');
+				_content = $(this).attr('src') ? $(this).attr('src').replace('data:image/png;base64,','') : '';
 				_imgName = $(this).attr('alt');
 				Create(_saveIn + _imgName, RepoBranch, _content, 'uploaded by' + UserLogin, function(err) {
 					$('#Uploading .progress').attr('value', parseFloat($('#Uploading .progress').attr('value')) + parseFloat(_augmentIn));
