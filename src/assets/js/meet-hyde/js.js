@@ -877,7 +877,7 @@ $('body').on('click', '#createFile .modal-footer .create', function () {
 			var title = $('#createPost form input').val();
 			var category = $('#createPost form select').val();
 			var	_newFile = '_posts/' + CurrentDate() + title+'.md';
-			var frontMatter = 'layout:post\ntitle : '+title+'\ncategory:'+category;
+			var frontMatter = 'layout: post\ntitle: '+title+'\ncategory: '+category;
 
 		Create(_newFile, RepoBranch, window.btoa(''), 'created by' + UserLogin, function(data) {
 			$('#createPost').modal('toggle');
